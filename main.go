@@ -28,6 +28,16 @@ func main() {
 		return
 	}
 
+	stderr, err := cmd.StderrPipe()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	go func() {
+		io.Copy(os.Stdout, stderr)
+	}()
+
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		if _, err := io.Copy(stdin, r.Body); err != nil {
 			fmt.Println(err)
