@@ -15,7 +15,7 @@ const (
 )
 
 func main() {
-	cmd := exec.Command(os.Args[1], os.Args[2:]...)
+	cmd := exec.Command(os.Args[2], os.Args[3:]...)
 	stdin, err := cmd.StdinPipe()
 	if err != nil {
 		fmt.Println(err)
@@ -52,5 +52,5 @@ func main() {
 		return
 	}
 
-	fmt.Println(http.ListenAndServe(":8000", nil))
+	fmt.Println(http.ListenAndServe(":" + os.Args[1], nil))
 }
